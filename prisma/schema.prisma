@@ -1,0 +1,36 @@
+generator client {
+    provider = "prisma-client-js"
+    output   = "../generated/prisma"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+model User {
+    walletAddress String   @id
+    uploads       Upload[]
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @default(now()) @updatedAt
+}
+
+model Upload {
+    id            String   @id @default(cuid())
+    walletAddress String
+    user          User     @relation(fields: [walletAddress], references: [walletAddress])
+    s3Key         String   @unique
+    filename      String
+    contentType   String
+    maxSize       Int
+    actualSize    Int?
+    tier          String
+    publicUrl     String
+    status        String   @default("pending")
+    pricePaid     Float
+    txHash        String?
+    expiresAt     DateTime
+    createdAt     DateTime @default(now())
+
+    @@index([walletAddress])
+    @@index([expiresAt])
+}
