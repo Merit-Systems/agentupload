@@ -41,6 +41,9 @@ importers:
       '@x402/extensions':
         specifier: ^2.3.0
         version: 2.3.0(bufferutil@4.1.0)(ethers@6.16.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(typescript@5.9.3)(utf-8-validate@5.0.10)
+      dotenv:
+        specifier: ^17.2.4
+        version: 17.2.4
       next:
         specifier: ^15.3.0
         version: 15.5.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
