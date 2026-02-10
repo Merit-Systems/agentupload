@@ -49,7 +49,7 @@ export async function POST(request: Request): Promise<NextResponse> {
   } catch (err) {
     log.error("Unhandled error in upload handler", {
       error: err instanceof Error ? err.message : String(err),
-      stack: err instanceof Error ? err.stack : undefined,
+      stack: err instanceof Error ? (err.stack ?? "") : "",
     });
     return NextResponse.json(
       { error: err instanceof Error ? err.message : "Internal server error" },
