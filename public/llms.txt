@@ -36,7 +36,7 @@ All uploads expire after 6 months.
 {
   "uploadId": "cuid...",
   "presignedUrl": "https://s3.amazonaws.com/...",
-  "publicUrl": "https://f.agentupload.dev/uploads/k7gm3nqp2/photo.png",
+  "publicUrl": "https://f.agentupload.dev/k7gm3nqp2/photo.png",
   "expiresAt": "2025-08-01T00:00:00.000Z",
   "maxSize": 10485760,
   "curlExample": "curl -X PUT ... --data-binary @photo.png"
