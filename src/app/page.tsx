@@ -2,10 +2,9 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-8">
       <div className="max-w-2xl space-y-8 text-center">
-        <h1 className="text-4xl font-bold tracking-tight">x402 Upload</h1>
+        <h1 className="text-4xl font-bold tracking-tight">Agent Upload</h1>
         <p className="text-lg text-muted-foreground">
-          S3-backed file uploads via x402 micropayments. Pay USDC on Base, get a
-          permanent download URL.
+          Pay USDC on Base, get a permanent download URL.
         </p>
 
         <div className="grid grid-cols-3 gap-4 text-left">
