@@ -5,10 +5,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/server/db";
 import { X402_ENABLED, DEV_MODE_WALLET } from "@/server/x402";
-import {
-  requireSiwxAuth,
-  siwxRequiredResponse,
-} from "@/server/x402/siwx";
+import { requireSiwxAuth, siwxRequiredResponse } from "@/server/x402/siwx";
 
 export async function GET(request: Request): Promise<NextResponse> {
   let walletAddress: string;

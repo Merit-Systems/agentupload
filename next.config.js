@@ -27,8 +27,7 @@ const config = {
           },
           {
             key: "Access-Control-Allow-Headers",
-            value:
-              "Content-Type, PAYMENT-SIGNATURE, X-PAYMENT, SIGN-IN-WITH-X",
+            value: "Content-Type, PAYMENT-SIGNATURE, X-PAYMENT, SIGN-IN-WITH-X",
           },
           {
             key: "Access-Control-Expose-Headers",
