@@ -17,13 +17,21 @@ const log = createLogger("cron-cleanup");
 
 export async function POST(request: Request): Promise<NextResponse> {
   // Verify cron secret
+  if (!env.CRON_SECRET) {
+    return NextResponse.json(
+      { error: "Cron endpoint not configured" },
+      { status: 500 },
+    );
+  }
   const authHeader = request.headers.get("authorization");
-  if (env.CRON_SECRET && authHeader !== `Bearer ${env.CRON_SECRET}`) {
+  if (authHeader !== `Bearer ${env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   let verified = 0;
   let oversized = 0;
+  let stale = 0;
+  let headErrors = 0;
   let expired = 0;
   let deleted = 0;
 
@@ -37,7 +45,19 @@ export async function POST(request: Request): Promise<NextResponse> {
   });
 
   for (const upload of pendingUploads) {
-    const head = await headObject(upload.s3Key);
+    let head: { exists: boolean; size?: number };
+    try {
+      head = await headObject(upload.s3Key);
+    } catch (err) {
+      log.error("HeadObject failed for pending upload", {
+        uploadId: upload.id,
+        key: upload.s3Key,
+        error: err instanceof Error ? err.message : String(err),
+      });
+      headErrors++;
+      continue;
+    }
+
     if (head.exists) {
       // Enforce tier size limit: delete objects that exceed maxSize
       if (head.size && head.size > upload.maxSize) {
@@ -67,6 +87,13 @@ export async function POST(request: Request): Promise<NextResponse> {
         data: { status: "uploaded", actualSize: head.size },
       });
       verified++;
+    } else {
+      // File was never uploaded and token has expired — mark as expired
+      await db.upload.update({
+        where: { id: upload.id },
+        data: { status: "expired" },
+      });
+      stale++;
     }
   }
 
@@ -98,7 +125,21 @@ export async function POST(request: Request): Promise<NextResponse> {
     }
   }
 
-  log.info("Cleanup complete", { verified, oversized, expired, deleted });
+  log.info("Cleanup complete", {
+    verified,
+    oversized,
+    stale,
+    headErrors,
+    expired,
+    deleted,
+  });
 
-  return NextResponse.json({ verified, oversized, expired, deleted });
+  return NextResponse.json({
+    verified,
+    oversized,
+    stale,
+    headErrors,
+    expired,
+    deleted,
+  });
 }

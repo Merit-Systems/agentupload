@@ -76,10 +76,15 @@ let initPromise: Promise<void> | null = null;
 export async function ensureInitialized(): Promise<void> {
   if (initialized) return;
 
-  initPromise ??= (async () => {
-    await x402Server.initialize();
-    initialized = true;
-  })();
+  initPromise ??= x402Server.initialize().then(
+    () => {
+      initialized = true;
+    },
+    (err) => {
+      initPromise = null;
+      throw err;
+    },
+  );
 
   return initPromise;
 }

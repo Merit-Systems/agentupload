@@ -33,8 +33,26 @@ import { createLogger } from "@/lib/logger";
 
 const log = createLogger("x402-upload");
 
+/**
+ * Strip path traversal, shell metacharacters, and limit length.
+ */
+function sanitizeFilename(raw: string): string {
+  // Extract basename (strip directory components)
+  let name = raw.split(/[\\/]/).pop() ?? raw;
+  // Remove characters unsafe in shells/URLs/filesystems
+  name = name.replace(/[^a-zA-Z0-9._-]/g, "_");
+  // Collapse consecutive dots (prevents ".."-style tricks)
+  name = name.replace(/\.{2,}/g, ".");
+  // Strip leading dots/dashes (hidden files, flag confusion)
+  name = name.replace(/^[.\-_]+/, "");
+  // Fallback if nothing remains
+  if (!name) name = "upload";
+  // Limit to 255 chars (filesystem max)
+  return name.slice(0, 255);
+}
+
 const uploadRequestSchema = z.object({
-  filename: z.string().describe("Name of the file to upload"),
+  filename: z.string().min(1).max(512).describe("Name of the file to upload"),
   contentType: z
     .string()
     .describe("MIME type of the file (e.g. image/png, video/mp4)"),
@@ -105,6 +123,7 @@ async function handleUpload(request: Request): Promise<NextResponse> {
   }
 
   const body = parsed.data;
+  const filename = sanitizeFilename(body.filename);
   const tier = TIERS[body.tier];
   const cost = tier.priceUsd;
 
@@ -174,17 +193,7 @@ async function handleUpload(request: Request): Promise<NextResponse> {
       });
     }
 
-    // Settle payment
-    const settleResult = await x402Server.settlePayment(payment, matchingReq);
-    if (!settleResult.success) {
-      return paymentRequiredResponse({
-        cost,
-        description: `Upload slot (${tier.label})`,
-        resourceUrl,
-        error: settleResult.errorReason ?? "Settlement failed",
-      });
-    }
-
+    // Extract and validate wallet BEFORE settlement (point of no return)
     walletAddress =
       extractWalletFromPayment(payment) ?? verifyResult.payer ?? "";
     if (!walletAddress) {
@@ -195,6 +204,25 @@ async function handleUpload(request: Request): Promise<NextResponse> {
         error: "Could not determine wallet address",
       });
     }
+    if (!isValidEvmAddress(walletAddress)) {
+      return paymentRequiredResponse({
+        cost,
+        description: `Upload slot (${tier.label})`,
+        resourceUrl,
+        error: "Invalid wallet address format",
+      });
+    }
+
+    // Settle payment — point of no return, USDC is taken
+    const settleResult = await x402Server.settlePayment(payment, matchingReq);
+    if (!settleResult.success) {
+      return paymentRequiredResponse({
+        cost,
+        description: `Upload slot (${tier.label})`,
+        resourceUrl,
+        error: settleResult.errorReason ?? "Settlement failed",
+      });
+    }
 
     paymentResponseHeader = encodePaymentResponseHeader(settleResult);
     txHash = settleResult.transaction;
@@ -202,7 +230,7 @@ async function handleUpload(request: Request): Promise<NextResponse> {
     walletAddress = DEV_MODE_WALLET;
   }
 
-  // Validate wallet
+  // Validate wallet (dev mode path)
   if (!isValidEvmAddress(walletAddress)) {
     return paymentRequiredResponse({
       cost,
@@ -212,34 +240,53 @@ async function handleUpload(request: Request): Promise<NextResponse> {
     });
   }
 
-  // JIT user creation
-  await db.user.upsert({
-    where: { walletAddress },
-    create: { walletAddress },
-    update: { updatedAt: new Date() },
-  });
+  // Compute expiresAt once
+  const expiresAt = new Date(Date.now() + EXPIRY_MS);
 
   // Generate ID upfront so s3Key and publicUrl are deterministic
   const uploadId = generateId();
-  const s3Key = `uploads/${uploadId}/${body.filename}`;
+  const s3Key = `uploads/${uploadId}/${filename}`;
   const filePublicUrl = publicUrl(s3Key);
 
-  // Single DB write with all fields
-  await db.upload.create({
-    data: {
-      id: uploadId,
+  // DB operations — wrapped in try/catch so a DB failure after payment
+  // settlement doesn't silently lose the agent's money
+  try {
+    await db.user.upsert({
+      where: { walletAddress },
+      create: { walletAddress },
+      update: { updatedAt: new Date() },
+    });
+
+    await db.upload.create({
+      data: {
+        id: uploadId,
+        walletAddress,
+        s3Key,
+        filename,
+        contentType: body.contentType,
+        maxSize: tier.maxBytes,
+        tier: body.tier,
+        publicUrl: filePublicUrl,
+        pricePaid: cost,
+        txHash,
+        expiresAt,
+      },
+    });
+  } catch (dbErr) {
+    log.error("CRITICAL: DB write failed after payment settlement", {
+      txHash: txHash ?? "",
       walletAddress,
-      s3Key,
-      filename: body.filename,
-      contentType: body.contentType,
-      maxSize: tier.maxBytes,
-      tier: body.tier,
-      publicUrl: filePublicUrl,
-      pricePaid: cost,
-      txHash,
-      expiresAt: new Date(Date.now() + EXPIRY_MS),
-    },
-  });
+      uploadId,
+      error: dbErr instanceof Error ? dbErr.message : String(dbErr),
+    });
+    return NextResponse.json(
+      {
+        error: "Internal error after payment — contact support with your txHash",
+        txHash,
+      },
+      { status: 500 },
+    );
+  }
 
   // Generate upload URL: prefer CDN token, fallback to S3 presigned
   const cdnUploadUrl = uploadUrl(s3Key);
@@ -269,10 +316,10 @@ async function handleUpload(request: Request): Promise<NextResponse> {
       uploadId,
       uploadUrl: finalUploadUrl,
       publicUrl: filePublicUrl,
-      expiresAt: new Date(Date.now() + EXPIRY_MS).toISOString(),
+      expiresAt: expiresAt.toISOString(),
       maxSize: tier.maxBytes,
       txHash,
-      curlExample: `curl -X PUT "${finalUploadUrl}" -H "Content-Type: ${body.contentType}" --data-binary @${body.filename}`,
+      curlExample: `curl -X PUT "${finalUploadUrl}" -H "Content-Type: ${body.contentType}" --data-binary @'${filename}'`,
     }),
     { status: 200, headers: responseHeaders },
   );
