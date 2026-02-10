@@ -133,10 +133,10 @@ export async function paymentRequiredResponse(
     type: "object" as const,
     properties: {
       uploadId: { type: "string" as const },
-      presignedUrl: { type: "string" as const },
+      uploadUrl: { type: "string" as const },
       publicUrl: { type: "string" as const },
     },
-    required: ["uploadId", "presignedUrl", "publicUrl"],
+    required: ["uploadId", "uploadUrl", "publicUrl"],
   };
 
   const paymentRequired = await x402Server.createPaymentRequiredResponse(
@@ -150,7 +150,7 @@ export async function paymentRequiredResponse(
         output: {
           example: {
             uploadId: "k7gm3nqp2",
-            presignedUrl: "https://s3.amazonaws.com/...",
+            uploadUrl: "https://f.agentupload.dev/k7gm3nqp2/photo.png?t=...",
             publicUrl: "https://f.agentupload.dev/k7gm3nqp2/photo.png",
           },
           schema: outputSchema,

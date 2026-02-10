@@ -1,11 +1,11 @@
 /**
  * POST /api/x402/upload — Buy an upload slot via x402 payment
  *
- * Returns a presigned S3 PUT URL + permanent public URL.
+ * Returns an upload URL + permanent public URL.
  *
  * Agent workflow:
- * 1. POST /api/x402/upload with payment → { presignedUrl, publicUrl, uploadId }
- * 2. curl -X PUT "$presignedUrl" -H "Content-Type: image/png" --data-binary @file.png
+ * 1. POST /api/x402/upload with payment → { uploadUrl, publicUrl, uploadId }
+ * 2. curl -X PUT "$uploadUrl" -H "Content-Type: image/png" --data-binary @file.png
  * 3. File live at publicUrl for 6 months
  */
 
@@ -26,7 +26,7 @@ import {
   DEV_MODE_WALLET,
   getBaseUrl,
 } from "@/server/x402";
-import { createPresignedPut, publicUrl } from "@/server/s3";
+import { createPresignedPut, publicUrl, uploadUrl } from "@/server/s3";
 import { TIERS, TIER_KEYS, EXPIRY_MS, type TierKey } from "@/lib/pricing";
 import { generateId } from "@/lib/id";
 import { createLogger } from "@/lib/logger";
@@ -241,11 +241,15 @@ async function handleUpload(request: Request): Promise<NextResponse> {
     },
   });
 
-  // Generate presigned PUT (no size constraint — enforced by cron post-upload)
-  const presignedUrl = await createPresignedPut({
-    key: s3Key,
-    contentType: body.contentType,
-  });
+  // Generate upload URL: prefer CDN token, fallback to S3 presigned
+  const cdnUploadUrl = uploadUrl(s3Key);
+  const presignedUrl = cdnUploadUrl
+    ? null
+    : await createPresignedPut({
+        key: s3Key,
+        contentType: body.contentType,
+      });
+  const finalUploadUrl = cdnUploadUrl ?? presignedUrl!;
 
   log.info("Created upload slot", {
     uploadId,
@@ -263,12 +267,12 @@ async function handleUpload(request: Request): Promise<NextResponse> {
   return new NextResponse(
     JSON.stringify({
       uploadId,
-      presignedUrl,
+      uploadUrl: finalUploadUrl,
       publicUrl: filePublicUrl,
       expiresAt: new Date(Date.now() + EXPIRY_MS).toISOString(),
       maxSize: tier.maxBytes,
       txHash,
-      curlExample: `curl -X PUT "${presignedUrl}" -H "Content-Type: ${body.contentType}" --data-binary @${body.filename}`,
+      curlExample: `curl -X PUT "${finalUploadUrl}" -H "Content-Type: ${body.contentType}" --data-binary @${body.filename}`,
     }),
     { status: 200, headers: responseHeaders },
   );

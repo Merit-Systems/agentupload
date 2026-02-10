@@ -6,14 +6,14 @@ S3-backed file uploads via x402 micropayments. USDC on Base. No API keys needed.
 
 1. Discover endpoints: `GET /.well-known/x402`
 2. Buy upload slot: `POST /api/x402/upload` with x402 payment
-3. Upload file via presigned PUT URL
+3. Upload file via the returned upload URL
 4. File is live at the returned public URL for 6 months
 
 ## Endpoints
 
 ### POST /api/x402/upload (x402 payment required)
 
-Buy an upload slot. Returns a presigned S3 PUT URL and permanent public URL.
+Buy an upload slot. Returns an upload URL and permanent public URL.
 
 **Input:**
 ```json
@@ -35,7 +35,7 @@ All uploads expire after 6 months.
 ```json
 {
   "uploadId": "k7gm3nqp2",
-  "presignedUrl": "https://s3.amazonaws.com/...",
+  "uploadUrl": "https://f.agentupload.dev/k7gm3nqp2/photo.png?t=...",
   "publicUrl": "https://f.agentupload.dev/k7gm3nqp2/photo.png",
   "expiresAt": "2025-08-01T00:00:00.000Z",
   "maxSize": 10485760,
@@ -45,7 +45,7 @@ All uploads expire after 6 months.
 
 **Upload the file:**
 ```bash
-curl -X PUT "$presignedUrl" -H "Content-Type: image/png" --data-binary @photo.png
+curl -X PUT "$uploadUrl" -H "Content-Type: image/png" --data-binary @photo.png
 ```
 
 ### GET /api/x402/uploads (SIWX auth required)
@@ -65,5 +65,5 @@ Get details for a specific upload including its public URL.
 
 - Public URLs are permanent for the upload's lifetime (6 months)
 - Files are stored on AWS S3 with public read access
-- Presigned PUT URLs expire after 1 hour
+- Upload URLs expire after 1 hour
 - Any file type is accepted (contentType is advisory)

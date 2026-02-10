@@ -16,7 +16,10 @@
     "db:push": "dotenv -e .env.local -- prisma db push",
     "db:generate": "dotenv -e .env.local -- prisma migrate dev",
     "db:studio": "dotenv -e .env.local -- prisma studio",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "cf:update": "aws cloudfront update-function --name upload-auth --function-code fileb://infra/upload-auth.js --function-config '{\"Comment\":\"Validates HMAC upload tokens on PUT\",\"Runtime\":\"cloudfront-js-2.0\"}' --if-match $(aws cloudfront describe-function --name upload-auth --query 'ETag' --output text)",
+    "cf:publish": "aws cloudfront publish-function --name upload-auth --if-match $(aws cloudfront describe-function --name upload-auth --query 'ETag' --output text)",
+    "cf:deploy": "pnpm cf:update && pnpm cf:publish"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.700.0",

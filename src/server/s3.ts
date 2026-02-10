@@ -13,6 +13,7 @@ import {
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { env } from "@/env";
+import { generateUploadToken } from "@/server/upload-token";
 
 export const s3 = new S3Client({
   region: env.AWS_REGION,
@@ -58,6 +59,17 @@ export function publicUrl(key: string): string {
     return `https://${env.CDN_HOST}/${cdnPath}`;
   }
   return `https://${BUCKET}.s3.${env.AWS_REGION}.amazonaws.com/${key}`;
+}
+
+/**
+ * CDN upload URL with HMAC token. Returns null if CDN uploads not configured.
+ */
+export function uploadUrl(key: string): string | null {
+  if (!env.CDN_HOST) return null;
+  const cdnPath = "/" + key.replace(/^uploads\//, "");
+  const token = generateUploadToken(cdnPath);
+  if (!token) return null;
+  return `https://${env.CDN_HOST}${cdnPath}?t=${token}`;
 }
 
 /**
