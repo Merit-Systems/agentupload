@@ -5,6 +5,7 @@
  * wallet authentication. Supports EVM and Solana wallets.
  */
 
+import { randomBytes } from "crypto";
 import { NextResponse } from "next/server";
 import { db } from "@/server/db";
 import { encodePaymentRequiredHeader } from "@x402/core/http";
@@ -32,8 +33,7 @@ export async function verifySiwxProof(
   headers: Headers,
   resourceUri: string,
 ): Promise<SiwxAuthResult> {
-  const header =
-    headers.get("SIGN-IN-WITH-X") ?? headers.get("sign-in-with-x");
+  const header = headers.get("SIGN-IN-WITH-X") ?? headers.get("sign-in-with-x");
 
   if (!header) {
     return { valid: false, error: "Missing SIGN-IN-WITH-X header" };
@@ -88,6 +88,18 @@ export function siwxRequiredResponse(
     network: "eip155:8453",
     statement: "Sign in to access your uploads",
   });
+
+  // declareSIWxExtension creates a static declaration without time-based
+  // challenge fields (nonce/issuedAt). Normally these are added by
+  // siwxResourceServerExtension.enrichPaymentRequiredResponse when going
+  // through x402Server.createPaymentRequiredResponse(), but for auth-only
+  // endpoints (accepts: []) we bypass that pipeline. Patch them in so
+  // clients can construct a valid SIWX proof.
+  const siwx = extensions["sign-in-with-x"];
+  if (siwx?.info) {
+    siwx.info.nonce = randomBytes(16).toString("hex");
+    siwx.info.issuedAt = new Date().toISOString();
+  }
 
   const body: PaymentRequired = {
     x402Version: 2,
