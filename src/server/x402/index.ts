@@ -85,6 +85,7 @@ export async function ensureInitialized(): Promise<void> {
 }
 
 export function getBaseUrl(): string {
+  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL;
   return process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
     : "http://localhost:3000";
