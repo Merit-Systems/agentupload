@@ -44,6 +44,21 @@ const uploadRequestSchema = z.object({
 });
 
 export async function POST(request: Request): Promise<NextResponse> {
+  try {
+    return await handleUpload(request);
+  } catch (err) {
+    log.error("Unhandled error in upload handler", {
+      error: err instanceof Error ? err.message : String(err),
+      stack: err instanceof Error ? err.stack : undefined,
+    });
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "Internal server error" },
+      { status: 500 },
+    );
+  }
+}
+
+async function handleUpload(request: Request): Promise<NextResponse> {
   const resourceUrl = `${getBaseUrl()}/api/x402/upload`;
 
   // Check for payment header FIRST
