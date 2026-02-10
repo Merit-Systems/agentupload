@@ -10,7 +10,6 @@
  */
 
 import { NextResponse } from "next/server";
-import { randomUUID } from "crypto";
 import { z } from "zod";
 import { db } from "@/server/db";
 import {
@@ -29,6 +28,7 @@ import {
 } from "@/server/x402";
 import { createPresignedPut, publicUrl } from "@/server/s3";
 import { TIERS, TIER_KEYS, EXPIRY_MS, type TierKey } from "@/lib/pricing";
+import { generateId } from "@/lib/id";
 import { createLogger } from "@/lib/logger";
 
 const log = createLogger("x402-upload");
@@ -220,7 +220,7 @@ async function handleUpload(request: Request): Promise<NextResponse> {
   });
 
   // Generate ID upfront so s3Key and publicUrl are deterministic
-  const uploadId = randomUUID();
+  const uploadId = generateId();
   const s3Key = `uploads/${uploadId}/${body.filename}`;
   const filePublicUrl = publicUrl(s3Key);
 

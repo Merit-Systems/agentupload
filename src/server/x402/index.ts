@@ -151,7 +151,7 @@ export async function paymentRequiredResponse(
           example: {
             uploadId: "upload_abc123",
             presignedUrl: "https://s3.amazonaws.com/...",
-            publicUrl: "https://x402-upload-prod.s3.us-east-1.amazonaws.com/...",
+            publicUrl: "https://f.agentupload.dev/uploads/k7gm3nqp2/photo.png",
           },
           schema: outputSchema,
         },

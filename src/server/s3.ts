@@ -48,9 +48,13 @@ export async function createPresignedPut(opts: {
 }
 
 /**
- * Public URL for an S3 object (bucket has public read on uploads/* prefix).
+ * Public URL for an S3 object.
+ * Uses CDN_HOST (e.g. f.agentupload.dev) when set, falls back to raw S3 URL.
  */
 export function publicUrl(key: string): string {
+  if (env.CDN_HOST) {
+    return `https://${env.CDN_HOST}/${key}`;
+  }
   return `https://${BUCKET}.s3.${env.AWS_REGION}.amazonaws.com/${key}`;
 }
 

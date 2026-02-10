@@ -15,7 +15,7 @@ model User {
 }
 
 model Upload {
-    id            String   @id @default(cuid())
+    id            String   @id
     walletAddress String
     user          User     @relation(fields: [walletAddress], references: [walletAddress])
     s3Key         String   @unique

@@ -13,6 +13,8 @@ export const env = createEnv({
     X402_ENABLED: z.string().optional().default("true"),
     X402_WALLET_ADDRESS: z.string().optional(),
     X402_NETWORK: z.string().optional().default("base-sepolia"),
+    // CDN
+    CDN_HOST: z.string().optional(),
     // Cron
     CRON_SECRET: z.string().optional(),
     NODE_ENV: z
@@ -29,6 +31,7 @@ export const env = createEnv({
     X402_ENABLED: process.env.X402_ENABLED,
     X402_WALLET_ADDRESS: process.env.X402_WALLET_ADDRESS,
     X402_NETWORK: process.env.X402_NETWORK,
+    CDN_HOST: process.env.CDN_HOST,
     CRON_SECRET: process.env.CRON_SECRET,
     NODE_ENV: process.env.NODE_ENV,
   },
