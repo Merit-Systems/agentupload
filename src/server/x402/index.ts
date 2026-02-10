@@ -149,7 +149,7 @@ export async function paymentRequiredResponse(
         ...(jsonSchema && { inputSchema: jsonSchema }),
         output: {
           example: {
-            uploadId: "upload_abc123",
+            uploadId: "k7gm3nqp2",
             presignedUrl: "https://s3.amazonaws.com/...",
             publicUrl: "https://f.agentupload.dev/k7gm3nqp2/photo.png",
           },
