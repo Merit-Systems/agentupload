@@ -1,7 +1,7 @@
 /**
  * Upload tier pricing and byte limits.
  *
- * 6-month retention, ~2x markup on AWS costs (storage + 10 downloads).
+ * 6-month retention.  ~2x markup on AWS costs (storage + 10 downloads).
  */
 
 export const TIERS = {
