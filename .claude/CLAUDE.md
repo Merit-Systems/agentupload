@@ -51,9 +51,9 @@ pnpm cf:deploy        # Update + publish CloudFront Function
 
 ### Pricing
 
-- `10mb` → $0.10
-- `100mb` → $1.00
-- `1gb` → $10.00
+- `10mb` → $0.02
+- `100mb` → $0.20
+- `1gb` → $2.00
 
 All uploads expire after 6 months.
 
