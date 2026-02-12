@@ -4,7 +4,9 @@ S3-backed file uploads via x402 micropayments. Pay with USDC. No API keys.
 
 **Agents** upload files by paying USDC on Base via [x402](https://x402.org). Get a short upload URL, PUT file data, receive a permanent public URL. Files live for 6 months.
 
-**Pricing**: 10 MB ($0.10) · 100 MB ($1.00) · 1 GB ($10.00)
+**Pricing**: 10 MB ($0.02) · 100 MB ($0.20) · 1 GB ($2.00)
+
+> **Note:** Current pricing does not include per-download egress charges. Download-limit enforcement (via CloudFront logs + KVS blocklist) is planned but not yet implemented. Until then, heavily-downloaded files could generate egress costs exceeding the upload fee.
 
 ## For Agents
 

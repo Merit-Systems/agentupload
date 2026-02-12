@@ -25,9 +25,9 @@ Buy an upload slot. Returns an upload URL and permanent public URL.
 ```
 
 **Tiers:**
-- `10mb` → $0.10 (max 10 MB)
-- `100mb` → $1.00 (max 100 MB)
-- `1gb` → $10.00 (max 1 GB)
+- `10mb` → $0.02 (max 10 MB)
+- `100mb` → $0.20 (max 100 MB)
+- `1gb` → $2.00 (max 1 GB)
 
 All uploads expire after 6 months.
 

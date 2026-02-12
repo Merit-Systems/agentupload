@@ -58,7 +58,7 @@ const uploadRequestSchema = z.object({
     .describe("MIME type of the file (e.g. image/png, video/mp4)"),
   tier: z
     .enum(TIER_KEYS as [TierKey, ...TierKey[]])
-    .describe("Upload tier: 10mb ($0.10), 100mb ($1.00), 1gb ($10.00)"),
+    .describe("Upload tier: 10mb ($0.02), 100mb ($0.20), 1gb ($2.00)"),
 });
 
 export async function POST(request: Request): Promise<NextResponse> {
@@ -96,7 +96,7 @@ async function handleUpload(request: Request): Promise<NextResponse> {
       return paymentRequiredResponse({
         cost: TIERS["10mb"].priceUsd,
         description:
-          "Buy an upload slot. Tiers: 10mb ($0.10), 100mb ($1.00), 1gb ($10.00)",
+          "Buy an upload slot. Tiers: 10mb ($0.02), 100mb ($0.20), 1gb ($2.00)",
         resourceUrl,
         inputSchema: uploadRequestSchema,
       });
@@ -111,7 +111,7 @@ async function handleUpload(request: Request): Promise<NextResponse> {
       return paymentRequiredResponse({
         cost: TIERS["10mb"].priceUsd,
         description:
-          "Buy an upload slot. Tiers: 10mb ($0.10), 100mb ($1.00), 1gb ($10.00)",
+          "Buy an upload slot. Tiers: 10mb ($0.02), 100mb ($0.20), 1gb ($2.00)",
         resourceUrl,
         inputSchema: uploadRequestSchema,
       });

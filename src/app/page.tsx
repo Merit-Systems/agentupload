@@ -9,19 +9,19 @@ export default function Home() {
 
         <div className="grid grid-cols-3 gap-4 text-left">
           <div className="border-border rounded border p-4">
-            <div className="text-2xl font-bold">$0.10</div>
+            <div className="text-2xl font-bold">$0.02</div>
             <div className="text-muted-foreground text-sm">
               10 MB &middot; 6 months
             </div>
           </div>
           <div className="border-border rounded border p-4">
-            <div className="text-2xl font-bold">$1.00</div>
+            <div className="text-2xl font-bold">$0.20</div>
             <div className="text-muted-foreground text-sm">
               100 MB &middot; 6 months
             </div>
           </div>
           <div className="border-border rounded border p-4">
-            <div className="text-2xl font-bold">$10.00</div>
+            <div className="text-2xl font-bold">$2.00</div>
             <div className="text-muted-foreground text-sm">
               1 GB &middot; 6 months
             </div>

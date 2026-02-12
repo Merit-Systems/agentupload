@@ -1,24 +1,24 @@
 /**
  * Upload tier pricing and byte limits.
  *
- * 6-month retention, ~10x markup on S3 storage costs.
+ * 6-month retention.  ~2x markup on AWS costs (storage + 10 downloads).
  */
 
 export const TIERS = {
   "10mb": {
     label: "10 MB",
     maxBytes: 10 * 1024 * 1024,
-    priceUsd: 0.1,
+    priceUsd: 0.02,
   },
   "100mb": {
     label: "100 MB",
     maxBytes: 100 * 1024 * 1024,
-    priceUsd: 1.0,
+    priceUsd: 0.2,
   },
   "1gb": {
     label: "1 GB",
     maxBytes: 1024 * 1024 * 1024,
-    priceUsd: 10.0,
+    priceUsd: 2.0,
   },
 } as const;
 
