@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@agentcash/router':
+        specifier: 0.4.8
+        version: 0.4.8(@coinbase/x402@2.1.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10))(@x402/core@2.3.0)(@x402/evm@2.3.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10))(@x402/extensions@2.3.0(bufferutil@4.1.0)(ethers@6.16.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(typescript@5.9.3)(utf-8-validate@5.0.10))(mppx@0.2.2(hono@4.11.4)(typescript@5.9.3)(viem@2.45.2(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)))(next@15.5.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(zod-openapi@5.4.6(zod@4.3.6))(zod@4.3.6)
       '@aws-sdk/client-s3':
         specifier: ^3.700.0
         version: 3.986.0
@@ -29,14 +32,17 @@ importers:
       '@prisma/client':
         specifier: ^7.2.0
         version: 7.3.0(prisma@7.3.0(@types/react@19.2.13)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3)
+      '@prisma/client-runtime-utils':
+        specifier: ^7.4.0
+        version: 7.4.0
       '@t3-oss/env-nextjs':
         specifier: ^0.12.0
-        version: 0.12.0(typescript@5.9.3)(valibot@1.2.0(typescript@5.9.3))(zod@3.25.76)
+        version: 0.12.0(typescript@5.9.3)(valibot@1.2.0(typescript@5.9.3))(zod@4.3.6)
       '@x402/core':
-        specifier: ^2.2.0
+        specifier: ^2.3.0
         version: 2.3.0
       '@x402/evm':
-        specifier: ^2.2.0
+        specifier: ^2.3.0
         version: 2.3.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@x402/extensions':
         specifier: ^2.3.0
@@ -44,6 +50,9 @@ importers:
       dotenv:
         specifier: ^17.2.4
         version: 17.2.4
+      mppx:
+        specifier: ^0.2.2
+        version: 0.2.2(hono@4.11.4)(typescript@5.9.3)(viem@2.45.2(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6))
       nanoid:
         specifier: ^5.1.6
         version: 5.1.6
@@ -61,13 +70,13 @@ importers:
         version: 19.2.4(react@19.2.4)
       viem:
         specifier: ^2.44.1
-        version: 2.45.2(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@3.25.76)
+        version: 2.45.2(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
       zod:
-        specifier: ^3.25.76
-        version: 3.25.76
-      zod-to-json-schema:
-        specifier: ^3.25.1
-        version: 3.25.1(zod@3.25.76)
+        specifier: ^4.0.0
+        version: 4.3.6
+      zod-openapi:
+        specifier: ^5.0.0
+        version: 5.4.6(zod@4.3.6)
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3.3.3
@@ -125,6 +134,21 @@ packages:
 
   '@adraffy/ens-normalize@1.11.1':
     resolution: {integrity: sha512-nhCBV3quEgesuf7c7KYfperqSS14T8bYuvJ8PcLJp6znkZpFc0AuW4qBtr8eKVyPPe/8RSr7sglCWPU5eaxwKQ==}
+
+  '@agentcash/router@0.4.8':
+    resolution: {integrity: sha512-4k6nW988DHsrzBRk7Fsy/ELAs8160bQ2OY+EKwE+h/lU8LZaDN/lR9vTrKA0yUukf1ULf6WHSxK/p9qFMbM4cQ==}
+    peerDependencies:
+      '@coinbase/x402': ^2.1.0
+      '@x402/core': ^2.3.0
+      '@x402/evm': ^2.3.0
+      '@x402/extensions': ^2.3.0
+      mppx: ^0.2.2
+      next: '>=15.0.0'
+      zod: ^4.0.0
+      zod-openapi: ^5.0.0
+    peerDependenciesMeta:
+      mppx:
+        optional: true
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -676,6 +700,9 @@ packages:
   '@prisma/client-runtime-utils@7.3.0':
     resolution: {integrity: sha512-dG/ceD9c+tnXATPk8G+USxxYM9E6UdMTnQeQ+1SZUDxTz7SgQcfxEqafqIQHcjdlcNK/pvmmLfSwAs3s2gYwUw==}
 
+  '@prisma/client-runtime-utils@7.4.0':
+    resolution: {integrity: sha512-jTmWAOBGBSCT8n7SMbpjCpHjELgcDW9GNP/CeK6CeqjUFlEL6dn8Cl81t/NBDjJdXDm85XDJmc+PEQqqQee3xw==}
+
   '@prisma/client@7.3.0':
     resolution: {integrity: sha512-FXBIxirqQfdC6b6HnNgxGmU7ydCPEPk7maHMOduJJfnTP+MuOGa15X4omjR/zpPUUpm8ef/mEFQjJudOGkXFcQ==}
     engines: {node: ^20.19 || ^22.12 || >=24.0}
@@ -727,6 +754,15 @@ packages:
       '@types/react': ^18.0.0 || ^19.0.0
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
+
+  '@remix-run/fetch-proxy@0.7.1':
+    resolution: {integrity: sha512-rPLfOpAaCXtm1dLI45uIPKERNbXbrh0P9AJc1sliz8pWd/McaFYjdr5KzB4QrFSfPvEt/Wmy6F2521qB1kK0ug==}
+
+  '@remix-run/headers@0.19.0':
+    resolution: {integrity: sha512-+62NbkXuXm9r/NdG6KfH9OCKofCWm8VjkrVPICiHKtRl8Gf2Vi6eFTN4mGgBlZRhd5mmEVRV4hTIn/JUSHDAOw==}
+
+  '@remix-run/node-fetch-server@0.13.0':
+    resolution: {integrity: sha512-1EsNo0ZpgXu/90AWoRZf/oE3RVTUS80tiTUpt+hv5pjtAkw7icN4WskDwz/KdAw5ARbJLMhZBrO1NqThmy/McA==}
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
@@ -1871,6 +1907,10 @@ packages:
       magicast:
         optional: true
 
+  cac@6.7.14:
+    resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
+    engines: {node: '>=8'}
+
   call-bind-apply-helpers@1.0.2:
     resolution: {integrity: sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==}
     engines: {node: '>= 0.4'}
@@ -2772,6 +2812,25 @@ packages:
   minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
 
+  mppx@0.2.2:
+    resolution: {integrity: sha512-wGdRhnrnRbl7Oyd2jYbqaVEtg7M23MZSO4/w4GhvMr3N+TFImE5gBpYZzy2VAbYugYCenjjetK5HR4bMjadsig==}
+    hasBin: true
+    peerDependencies:
+      '@modelcontextprotocol/sdk': '>=1.25.0'
+      elysia: '>=1'
+      express: '>=5'
+      hono: '>=4'
+      viem: '>=2.44.4'
+    peerDependenciesMeta:
+      '@modelcontextprotocol/sdk':
+        optional: true
+      elysia:
+        optional: true
+      express:
+        optional: true
+      hono:
+        optional: true
+
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
@@ -2888,6 +2947,14 @@ packages:
 
   ox@0.11.3:
     resolution: {integrity: sha512-1bWYGk/xZel3xro3l8WGg6eq4YEKlaqvyMtVhfMFpbJzK2F6rj4EDRtqDCWVEJMkzcmEi9uW2QxsqELokOlarw==}
+    peerDependencies:
+      typescript: '>=5.4.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
+  ox@0.12.4:
+    resolution: {integrity: sha512-+P+C7QzuwPV8lu79dOwjBKfB2CbnbEXe/hfyyrff1drrO1nOOj3Hc87svHfcW1yneRr3WXaKr6nz11nq+/DF9Q==}
     peerDependencies:
       typescript: '>=5.4.0'
     peerDependenciesMeta:
@@ -3562,19 +3629,35 @@ packages:
   zeptomatch@2.1.0:
     resolution: {integrity: sha512-KiGErG2J0G82LSpniV0CtIzjlJ10E04j02VOudJsPyPwNZgGnRKQy7I1R7GMyg/QswnE4l7ohSGrQbQbjXPPDA==}
 
-  zod-to-json-schema@3.25.1:
-    resolution: {integrity: sha512-pM/SU9d3YAggzi6MtR4h7ruuQlqKtad8e9S0fmxcMi+ueAK5Korys/aWcV9LIIHTVbj01NdzxcnXSN+O74ZIVA==}
+  zod-openapi@5.4.6:
+    resolution: {integrity: sha512-P2jsOOBAq/6hCwUsMCjUATZ8szkMsV5VAwZENfyxp2Hc/XPJQpVwAgevWZc65xZauCwWB9LAn7zYeiCJFAEL+A==}
+    engines: {node: '>=20'}
     peerDependencies:
-      zod: ^3.25 || ^4
+      zod: ^3.25.74 || ^4.0.0
 
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+
+  zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
 
 snapshots:
 
   '@adraffy/ens-normalize@1.10.1': {}
 
   '@adraffy/ens-normalize@1.11.1': {}
+
+  '@agentcash/router@0.4.8(@coinbase/x402@2.1.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10))(@x402/core@2.3.0)(@x402/evm@2.3.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10))(@x402/extensions@2.3.0(bufferutil@4.1.0)(ethers@6.16.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(typescript@5.9.3)(utf-8-validate@5.0.10))(mppx@0.2.2(hono@4.11.4)(typescript@5.9.3)(viem@2.45.2(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)))(next@15.5.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(zod-openapi@5.4.6(zod@4.3.6))(zod@4.3.6)':
+    dependencies:
+      '@coinbase/x402': 2.1.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
+      '@x402/core': 2.3.0
+      '@x402/evm': 2.3.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
+      '@x402/extensions': 2.3.0(bufferutil@4.1.0)(ethers@6.16.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(typescript@5.9.3)(utf-8-validate@5.0.10)
+      next: 15.5.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      zod: 4.3.6
+      zod-openapi: 5.4.6(zod@4.3.6)
+    optionalDependencies:
+      mppx: 0.2.2(hono@4.11.4)(typescript@5.9.3)(viem@2.45.2(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6))
 
   '@alloc/quick-lru@5.2.0': {}
 
@@ -4440,6 +4523,8 @@ snapshots:
 
   '@prisma/client-runtime-utils@7.3.0': {}
 
+  '@prisma/client-runtime-utils@7.4.0': {}
+
   '@prisma/client@7.3.0(prisma@7.3.0(@types/react@19.2.13)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(typescript@5.9.3)':
     dependencies:
       '@prisma/client-runtime-utils': 7.3.0
@@ -4516,6 +4601,14 @@ snapshots:
       '@types/react': 19.2.13
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
+
+  '@remix-run/fetch-proxy@0.7.1':
+    dependencies:
+      '@remix-run/headers': 0.19.0
+
+  '@remix-run/headers@0.19.0': {}
+
+  '@remix-run/node-fetch-server@0.13.0': {}
 
   '@rtsao/scc@1.1.0': {}
 
@@ -5378,19 +5471,19 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@t3-oss/env-core@0.12.0(typescript@5.9.3)(valibot@1.2.0(typescript@5.9.3))(zod@3.25.76)':
+  '@t3-oss/env-core@0.12.0(typescript@5.9.3)(valibot@1.2.0(typescript@5.9.3))(zod@4.3.6)':
     optionalDependencies:
       typescript: 5.9.3
       valibot: 1.2.0(typescript@5.9.3)
-      zod: 3.25.76
+      zod: 4.3.6
 
-  '@t3-oss/env-nextjs@0.12.0(typescript@5.9.3)(valibot@1.2.0(typescript@5.9.3))(zod@3.25.76)':
+  '@t3-oss/env-nextjs@0.12.0(typescript@5.9.3)(valibot@1.2.0(typescript@5.9.3))(zod@4.3.6)':
     dependencies:
-      '@t3-oss/env-core': 0.12.0(typescript@5.9.3)(valibot@1.2.0(typescript@5.9.3))(zod@3.25.76)
+      '@t3-oss/env-core': 0.12.0(typescript@5.9.3)(valibot@1.2.0(typescript@5.9.3))(zod@4.3.6)
     optionalDependencies:
       typescript: 5.9.3
       valibot: 1.2.0(typescript@5.9.3)
-      zod: 3.25.76
+      zod: 4.3.6
 
   '@tailwindcss/node@4.1.18':
     dependencies:
@@ -5703,6 +5796,11 @@ snapshots:
       typescript: 5.9.3
       zod: 3.25.76
 
+  abitype@1.2.3(typescript@5.9.3)(zod@4.3.6):
+    optionalDependencies:
+      typescript: 5.9.3
+      zod: 4.3.6
+
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:
       acorn: 8.15.0
@@ -5894,6 +5992,8 @@ snapshots:
       perfect-debounce: 1.0.0
       pkg-types: 2.3.0
       rc9: 2.1.2
+
+  cac@6.7.14: {}
 
   call-bind-apply-helpers@1.0.2:
     dependencies:
@@ -6911,6 +7011,19 @@ snapshots:
 
   minimist@1.2.8: {}
 
+  mppx@0.2.2(hono@4.11.4)(typescript@5.9.3)(viem@2.45.2(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)):
+    dependencies:
+      '@remix-run/fetch-proxy': 0.7.1
+      '@remix-run/node-fetch-server': 0.13.0
+      cac: 6.7.14
+      ox: 0.12.4(typescript@5.9.3)(zod@4.3.6)
+      viem: 2.45.2(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)
+      zod: 4.3.6
+    optionalDependencies:
+      hono: 4.11.4
+    transitivePeerDependencies:
+      - typescript
+
   ms@2.1.3: {}
 
   mysql2@3.15.3:
@@ -7043,6 +7156,36 @@ snapshots:
       '@scure/bip32': 1.7.0
       '@scure/bip39': 1.6.0
       abitype: 1.2.3(typescript@5.9.3)(zod@3.25.76)
+      eventemitter3: 5.0.1
+    optionalDependencies:
+      typescript: 5.9.3
+    transitivePeerDependencies:
+      - zod
+
+  ox@0.11.3(typescript@5.9.3)(zod@4.3.6):
+    dependencies:
+      '@adraffy/ens-normalize': 1.11.1
+      '@noble/ciphers': 1.3.0
+      '@noble/curves': 1.9.1
+      '@noble/hashes': 1.8.0
+      '@scure/bip32': 1.7.0
+      '@scure/bip39': 1.6.0
+      abitype: 1.2.3(typescript@5.9.3)(zod@4.3.6)
+      eventemitter3: 5.0.1
+    optionalDependencies:
+      typescript: 5.9.3
+    transitivePeerDependencies:
+      - zod
+
+  ox@0.12.4(typescript@5.9.3)(zod@4.3.6):
+    dependencies:
+      '@adraffy/ens-normalize': 1.11.1
+      '@noble/ciphers': 1.3.0
+      '@noble/curves': 1.9.1
+      '@noble/hashes': 1.8.0
+      '@scure/bip32': 1.7.0
+      '@scure/bip39': 1.6.0
+      abitype: 1.2.3(typescript@5.9.3)(zod@4.3.6)
       eventemitter3: 5.0.1
     optionalDependencies:
       typescript: 5.9.3
@@ -7649,6 +7792,23 @@ snapshots:
       - utf-8-validate
       - zod
 
+  viem@2.45.2(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6):
+    dependencies:
+      '@noble/curves': 1.9.1
+      '@noble/hashes': 1.8.0
+      '@scure/bip32': 1.7.0
+      '@scure/bip39': 1.6.0
+      abitype: 1.2.3(typescript@5.9.3)(zod@4.3.6)
+      isows: 1.0.7(ws@8.18.3(bufferutil@4.1.0)(utf-8-validate@5.0.10))
+      ox: 0.11.3(typescript@5.9.3)(zod@4.3.6)
+      ws: 8.18.3(bufferutil@4.1.0)(utf-8-validate@5.0.10)
+    optionalDependencies:
+      typescript: 5.9.3
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+      - zod
+
   webidl-conversions@3.0.1: {}
 
   whatwg-url@5.0.0:
@@ -7732,8 +7892,10 @@ snapshots:
       grammex: 3.1.12
       graphmatch: 1.1.0
 
-  zod-to-json-schema@3.25.1(zod@3.25.76):
+  zod-openapi@5.4.6(zod@4.3.6):
     dependencies:
-      zod: 3.25.76
+      zod: 4.3.6
 
   zod@3.25.76: {}
+
+  zod@4.3.6: {}
