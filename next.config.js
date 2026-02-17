@@ -5,6 +5,7 @@ import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
 const config = {
+  serverExternalPackages: ["mppx"],
   // Rewrite .well-known paths to regular routes
   async rewrites() {
     return [

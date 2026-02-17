@@ -2,45 +2,39 @@
  * GET /api/x402/uploads — List wallet's uploads (SIWX auth)
  */
 
-import { NextResponse } from "next/server";
+import { router } from "@/lib/router";
 import { db } from "@/server/db";
-import { X402_ENABLED, DEV_MODE_WALLET } from "@/server/x402";
-import { requireSiwxAuth, siwxRequiredResponse } from "@/server/x402/siwx";
 
-export async function GET(request: Request): Promise<NextResponse> {
-  let walletAddress: string;
+export const GET = router
+  .route("uploads")
+  .siwx()
+  .description("List uploads for the authenticated wallet")
+  .handler(async ({ wallet }) => {
+    const walletAddress = wallet!.toLowerCase();
 
-  if (X402_ENABLED) {
-    try {
-      const auth = await requireSiwxAuth(request);
-      walletAddress = auth.walletAddress;
-    } catch (error) {
-      if (error instanceof NextResponse) {
-        return error;
-      }
-      return siwxRequiredResponse(request, "Authentication required");
-    }
-  } else {
-    walletAddress = DEV_MODE_WALLET;
-  }
+    await db.user.upsert({
+      where: { walletAddress },
+      create: { walletAddress },
+      update: {},
+    });
 
-  const uploads = await db.upload.findMany({
-    where: { walletAddress },
-    orderBy: { createdAt: "desc" },
-    select: {
-      id: true,
-      filename: true,
-      contentType: true,
-      tier: true,
-      maxSize: true,
-      actualSize: true,
-      publicUrl: true,
-      status: true,
-      pricePaid: true,
-      expiresAt: true,
-      createdAt: true,
-    },
+    const uploads = await db.upload.findMany({
+      where: { walletAddress },
+      orderBy: { createdAt: "desc" },
+      select: {
+        id: true,
+        filename: true,
+        contentType: true,
+        tier: true,
+        maxSize: true,
+        actualSize: true,
+        publicUrl: true,
+        status: true,
+        pricePaid: true,
+        expiresAt: true,
+        createdAt: true,
+      },
+    });
+
+    return { uploads };
   });
-
-  return NextResponse.json({ uploads });
-}
