@@ -1,5 +1,5 @@
 /**
- * GET /api/x402/download/[uploadId] — Get upload details + public URL (SIWX auth)
+ * GET /api/download/[uploadId] — Get upload details + public URL (SIWX auth)
  */
 
 import { router } from "@/lib/router";

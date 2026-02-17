@@ -1,10 +1,10 @@
 /**
- * POST /api/x402/upload — Buy an upload slot via x402 payment
+ * POST /api/upload — Buy an upload slot via x402/MPP payment
  *
  * Returns an upload URL + permanent public URL.
  *
  * Agent workflow:
- * 1. POST /api/x402/upload with payment → { uploadUrl, publicUrl, uploadId }
+ * 1. POST /api/upload with payment → { uploadUrl, publicUrl, uploadId }
  * 2. curl -X PUT "$uploadUrl" -H "Content-Type: image/png" --data-binary @file.png
  * 3. File live at publicUrl for 6 months
  */
