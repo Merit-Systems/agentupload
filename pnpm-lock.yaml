@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@agentcash/router':
-        specifier: 0.4.7
-        version: 0.4.7(@coinbase/x402@2.1.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10))(@x402/core@2.3.0)(@x402/evm@2.3.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10))(@x402/extensions@2.3.0(bufferutil@4.1.0)(ethers@6.16.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(typescript@5.9.3)(utf-8-validate@5.0.10))(mppx@0.2.2(hono@4.11.4)(typescript@5.9.3)(viem@2.45.2(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)))(next@15.5.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(zod-openapi@5.4.6(zod@4.3.6))(zod@4.3.6)
+        specifier: file:../agentcash-router
+        version: file:../agentcash-router(@coinbase/x402@2.1.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10))(@x402/core@2.3.0)(@x402/evm@2.3.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10))(@x402/extensions@2.3.0(bufferutil@4.1.0)(ethers@6.16.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(typescript@5.9.3)(utf-8-validate@5.0.10))(mppx@0.2.2(hono@4.11.4)(typescript@5.9.3)(viem@2.45.2(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)))(next@15.5.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(zod-openapi@5.4.6(zod@4.3.6))(zod@4.3.6)
       '@aws-sdk/client-s3':
         specifier: ^3.700.0
         version: 3.986.0
@@ -135,8 +135,8 @@ packages:
   '@adraffy/ens-normalize@1.11.1':
     resolution: {integrity: sha512-nhCBV3quEgesuf7c7KYfperqSS14T8bYuvJ8PcLJp6znkZpFc0AuW4qBtr8eKVyPPe/8RSr7sglCWPU5eaxwKQ==}
 
-  '@agentcash/router@0.4.7':
-    resolution: {integrity: sha512-ZfkqzC60EB8PBYd9moHeffHNS6bqN4SWdweMN7fgZqETxuLumRC/Z1AgKRuDLW2qzLqsiq7/yoTMBiYHfMlWRA==}
+  '@agentcash/router@file:../agentcash-router':
+    resolution: {directory: ../agentcash-router, type: directory}
     peerDependencies:
       '@coinbase/x402': ^2.1.0
       '@x402/core': ^2.3.0
@@ -3647,7 +3647,7 @@ snapshots:
 
   '@adraffy/ens-normalize@1.11.1': {}
 
-  '@agentcash/router@0.4.7(@coinbase/x402@2.1.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10))(@x402/core@2.3.0)(@x402/evm@2.3.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10))(@x402/extensions@2.3.0(bufferutil@4.1.0)(ethers@6.16.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(typescript@5.9.3)(utf-8-validate@5.0.10))(mppx@0.2.2(hono@4.11.4)(typescript@5.9.3)(viem@2.45.2(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)))(next@15.5.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(zod-openapi@5.4.6(zod@4.3.6))(zod@4.3.6)':
+  '@agentcash/router@file:../agentcash-router(@coinbase/x402@2.1.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10))(@x402/core@2.3.0)(@x402/evm@2.3.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10))(@x402/extensions@2.3.0(bufferutil@4.1.0)(ethers@6.16.0(bufferutil@4.1.0)(utf-8-validate@5.0.10))(typescript@5.9.3)(utf-8-validate@5.0.10))(mppx@0.2.2(hono@4.11.4)(typescript@5.9.3)(viem@2.45.2(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.3.6)))(next@15.5.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(zod-openapi@5.4.6(zod@4.3.6))(zod@4.3.6)':
     dependencies:
       '@coinbase/x402': 2.1.0(bufferutil@4.1.0)(typescript@5.9.3)(utf-8-validate@5.0.10)
       '@x402/core': 2.3.0
