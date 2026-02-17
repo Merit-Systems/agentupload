@@ -9,7 +9,7 @@
  * 3. File live at publicUrl for 6 months
  */
 
-import { router } from "@/lib/router";
+import { router, getProtocols } from "@/lib/router";
 import {
   uploadRequestSchema,
   uploadResponseSchema,
@@ -43,7 +43,7 @@ export const POST = router
       "100mb": { price: "0.20", label: "100 MB" },
       "1gb": { price: "2.00", label: "1 GB" },
     },
-  })
+  }, { protocols: getProtocols() })
   .body(uploadRequestSchema)
   .output(uploadResponseSchema)
   .description("Buy an upload slot. Agent uploads file via returned URL.")
