@@ -1,5 +1,5 @@
 /**
- * GET /api/x402/uploads — List wallet's uploads (SIWX auth)
+ * GET /api/uploads — List wallet's uploads (SIWX auth)
  */
 
 import { router } from "@/lib/router";

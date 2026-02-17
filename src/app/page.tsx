@@ -32,8 +32,8 @@ export default function Home() {
           <p className="text-foreground font-medium">How it works:</p>
           <ol className="list-inside list-decimal space-y-1">
             <li>
-              POST <code className="text-foreground">/api/x402/upload</code>{" "}
-              with x402 payment
+              POST <code className="text-foreground">/api/upload</code>{" "}
+              with payment
             </li>
             <li>Upload file via presigned PUT URL</li>
             <li>File is live at the public URL for 6 months</li>
