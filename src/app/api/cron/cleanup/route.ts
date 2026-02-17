@@ -17,7 +17,7 @@ const log = createLogger("cron-cleanup");
 
 export const POST = router
   .route("cron/cleanup")
-  .apiKey((key) => (key === env.CRON_SECRET ? { cron: true } : null))
+  .apiKey((key) => (env.CRON_SECRET && key === env.CRON_SECRET ? { cron: true } : null))
   .description("Cleanup expired/empty uploads")
   .handler(async () => {
     let verified = 0;
